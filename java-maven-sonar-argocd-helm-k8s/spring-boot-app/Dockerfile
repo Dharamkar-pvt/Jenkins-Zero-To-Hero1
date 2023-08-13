@@ -1,4 +1,13 @@
+# You can change this base image to anything else
+# But make sure to use the correct version of Java
 FROM adoptopenjdk/openjdk11:alpine-jre
-ADD http://43.204.218.212:8081/repository/abhishek/ /app/spring-boot-web.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app/spring-boot-web.jar"]
+
+# Simply the artifact path
+ARG artifact=target/spring-boot-web.jar
+
+WORKDIR /opt/app
+
+COPY ${artifact} app.jar
+
+# This should not be changed
+ENTRYPOINT ["java","-jar","app.jar"]
